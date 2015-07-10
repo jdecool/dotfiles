@@ -1,0 +1,60 @@
+[alias]
+  a = add
+  amend = commit --amend --reuse-message=HEAD
+  c = clone --recursive
+  ca = !git add -A && git commit -av
+  ci = commit
+  co = checkout
+  contributors = shortlog --summary --numbered
+  d = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
+  di = !"d() { git diff --patch-with-stat HEAD~$1; }; git diff-index --quiet HEAD -- || clear; d"
+  go = "!f() { git checkout -b \"$1\" 2> /dev/null || git checkout \"$1\"; }; f"
+  l = log --pretty=oneline -n 20 --graph --abbrev-commit
+  lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+  p = !"git pull; git submodule foreach git pull origin master"
+  s = status -s
+  st = status
+  tags = tag -l
+
+[apply]
+  whitespace = fix
+
+[core]
+  editor = vim
+  excludesfile = ~/.gitignore_global
+  whitespace = space-before-tab,-indent-with-non-tab,trailing-space
+
+[color]
+  ui = auto
+
+[color "branch"]
+  current = yellow reverse
+  local = yellow
+  remote = green
+
+[color "diff"]
+  frag = magenta bold
+  meta = yellow bold
+  new = green
+  old = red
+
+[color "status"]
+  added = yellow
+  changed = green
+  untracked = cyan
+
+[diff]
+  renames = copies
+
+[merge]
+  log = true
+
+[push]
+  default = simple
+
+[user]
+  name = Jérémy DECOOL
+  email = contact@jdecool.fr
+
+[github]
+  user = jdecool
