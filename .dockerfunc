@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# Helper Functions
+dcleanup(){
+  docker rm $(docker ps --filter status=exited -q 2>/dev/null) 2>/dev/null
+  docker rmi $(docker images --filter dangling=true -q 2>/dev/null) 2>/dev/null
+}
+
+del_stopped(){
+  local name=$1
+  local state=$(docker inspect --format "{{.State.Running}}" $name 2>/dev/null)
+
+  if [[ "$state" == "false" ]]; then
+    docker rm $name
+  fi
+}
+
+# Container Aliases
+jekyll() {
+  docker run --rm -it \
+    -v $(pwd):/srv/jekyll \
+    -p 127.0.0.1:4000:4000 \
+    jekyll/stable jekyll "$@"
+}
