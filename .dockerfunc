@@ -16,9 +16,46 @@ del_stopped(){
 }
 
 # Container Aliases
+composer() {
+  docker run --rm -it \
+    -v $(pwd):/app \
+    jdecool/composer "$@"
+}
+
 jekyll() {
   docker run --rm -it \
     -v $(pwd):/srv/jekyll \
     -p 127.0.0.1:4000:4000 \
-    jekyll/stable jekyll "$@"
+    jdecool/jekyll jekyll "$@"
+}
+
+keepass2() {
+  del_stopped keepass2
+
+  docker run -d \
+    -v /tmp/.X11-unix:/tmp/.X11-unix \
+    -v $HOME/Documents:/root/Documents \
+    -e DISPLAY=unix$DISPLAY \
+    --name keepass2 \
+    jdecool/keepass2 "$@"
+}
+
+pgadmin() {
+  del_stopped pgadmin
+
+  docker run -d \
+    --net host \
+    -v /tmp/.X11-unix:/tmp/.X11-unix \
+    -e DISPLAY=unix$DISPLAY \
+    --name pgadmin \
+    jdecool/pgadmin "$@"
+}
+
+postgres() {
+  del_stopped postgres
+
+  docker run -d \
+    -e POSTGRES_PASSWORD=root \
+    -p 127.0.0.1:5432:5432 \
+    postgres
 }
