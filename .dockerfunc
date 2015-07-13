@@ -51,6 +51,17 @@ mysql() {
     mysql
 }
 
+mysql-workbench() {
+  del_stopped mysql-workbench
+
+  docker run -d \
+    --net host \
+    -v /tmp/.X11-unix:/tmp/.X11-unix \
+    -e DISPLAY=unix$DISPLAY \
+    --name mysql-workbench \
+    jdecool/mysql-workbench "$@"
+}
+
 pgadmin() {
   del_stopped pgadmin
 
