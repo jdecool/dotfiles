@@ -1,12 +1,12 @@
 #!/bin/bash
 
 # Helper Functions
-dcleanup(){
+dcleanup() {
   docker rm $(docker ps --filter status=exited -q 2>/dev/null) 2>/dev/null
   docker rmi $(docker images --filter dangling=true -q 2>/dev/null) 2>/dev/null
 }
 
-del_stopped(){
+del_stopped() {
   local name=$1
   local state=$(docker inspect --format "{{.State.Running}}" $name 2>/dev/null)
 
@@ -40,6 +40,17 @@ keepass2() {
     jdecool/keepass2 "$@"
 }
 
+mysql() {
+  docker stop mysql 2>/dev/null
+  docker rm mysql >/dev/null 2>/dev/null
+
+  docker run -d \
+    -e MYSQL_ROOT_PASSWORD=root \
+    -p 127.0.0.1:3306:3306 \
+    --name=mysql \
+    mysql
+}
+
 pgadmin() {
   del_stopped pgadmin
 
@@ -52,10 +63,12 @@ pgadmin() {
 }
 
 postgres() {
-  del_stopped postgres
+  docker stop postgres 2>/dev/null
+  docker rm postgres >/dev/null 2>/dev/null
 
   docker run -d \
     -e POSTGRES_PASSWORD=root \
     -p 127.0.0.1:5432:5432 \
+    --name=postgres \
     postgres
 }
