@@ -1,6 +1,7 @@
 [alias]
   a = add
   amend = commit --amend --reuse-message=HEAD
+  br = branch
   c = clone --recursive
   ca = !git add -A && git commit -av
   ci = commit

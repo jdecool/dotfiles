@@ -35,3 +35,12 @@
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# JetBrains IDEs #
+##################
+*.iml
+.idea
+*.ipr
+*.iws
+.idea_modules/
+atlassian-ide-plugin.xml
