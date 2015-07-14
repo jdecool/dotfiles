@@ -40,6 +40,12 @@ keepass2() {
     jdecool/keepass2 "$@"
 }
 
+hhvm() {
+  docker run --rm -it \
+    -v $(pwd):/srv/jekyll \
+    hhvm
+}
+
 mysql() {
   docker stop mysql 2>/dev/null
   docker rm mysql >/dev/null 2>/dev/null
