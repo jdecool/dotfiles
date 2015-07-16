@@ -40,6 +40,13 @@ keepass2() {
     jdecool/keepass2 "$@"
 }
 
+go() {
+  docker run --rm -it \
+    -v $(pwd):/usr/src/myapp \
+    -w /usr/src/myapp \
+    golang go "$@"
+}
+
 hhvm() {
   docker run --rm -it \
     -v $(pwd):/root \
