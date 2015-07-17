@@ -57,9 +57,15 @@ mysql() {
   docker stop mysql 2>/dev/null
   docker rm mysql >/dev/null 2>/dev/null
 
+  local DATADIR=$HOME/.mysql
+  if [ -d "$DATADIR" ]; then
+    mkdir -p $DATADIR
+  fi
+
   docker run -d \
     -e MYSQL_ROOT_PASSWORD=root \
     -p 127.0.0.1:3306:3306 \
+    -v $DATADIR:/var/lib/mysql \
     --name=mysql \
     mysql
 }
@@ -90,9 +96,15 @@ postgres() {
   docker stop postgres 2>/dev/null
   docker rm postgres >/dev/null 2>/dev/null
 
+  local DATADIR=$HOME/.postgres
+  if [ -d "$DATADIR" ]; then
+    mkdir -p $DATADIR
+  fi
+
   docker run -d \
     -e POSTGRES_PASSWORD=root \
     -p 127.0.0.1:5432:5432 \
+    -v $DATADIR:/var/lib/postgresql/data \
     --name=postgres \
     postgres
 }
