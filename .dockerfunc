@@ -22,6 +22,36 @@ composer() {
     jdecool/composer "$@"
 }
 
+elasticsearch() {
+  docker stop elasticsearch 2>/dev/null
+  docker rm elasticsearch >/dev/null 2>/dev/null
+
+  local DATADIR=$HOME/.elasticsearch
+  if [ -d "$DATADIR" ]; then
+    mkdir -p $DATADIR
+  fi
+
+  docker run -d \
+    -p 127.0.0.1:9200:9200 \
+    -p 127.0.0.1:9300:9300 \
+    -v $DATADIR:/usr/share/elasticsearch/data \
+    --name=elasticsearch \
+    elasticsearch
+}
+
+go() {
+  docker run --rm -it \
+    -v $(pwd):/usr/src/myapp \
+    -w /usr/src/myapp \
+    golang go "$@"
+}
+
+hhvm() {
+  docker run --rm -it \
+    -v $(pwd):/root \
+    jdecool/hhvm "$@"
+}
+
 jekyll() {
   docker run --rm -it \
     -v $(pwd):/srv/jekyll \
@@ -40,17 +70,19 @@ keepass2() {
     jdecool/keepass2 "$@"
 }
 
-go() {
-  docker run --rm -it \
-    -v $(pwd):/usr/src/myapp \
-    -w /usr/src/myapp \
-    golang go "$@"
-}
+mongo() {
+  del_stopped mongo
 
-hhvm() {
-  docker run --rm -it \
-    -v $(pwd):/root \
-    jdecool/hhvm "$@"
+  local DATADIR=$HOME/.mongodb
+  if [ -d "$DATADIR" ]; then
+    mkdir -p $DATADIR
+  fi
+
+  docker run -d \
+    -p 127.0.0.1:27017:27017 \
+    -v $DATADIR:/data/db \
+    --name=mongo \
+    mongo
 }
 
 mysql() {
@@ -107,6 +139,22 @@ postgres() {
     -v $DATADIR:/var/lib/postgresql/data \
     --name=postgres \
     postgres
+}
+
+redis() {
+  docker stop redis 2>/dev/null
+  docker rm redis >/dev/null 2>/dev/null
+
+  local DATADIR=$HOME/.redis
+  if [ -d "$DATADIR" ]; then
+    mkdir -p $DATADIR
+  fi
+
+  docker run -d \
+    -p 127.0.0.1:6379:6379 \
+    -v $DATADIR:/data \
+    --name=redis \
+    redis
 }
 
 virtualbox() {
