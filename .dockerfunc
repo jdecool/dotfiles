@@ -40,8 +40,14 @@ elasticsearch() {
 }
 
 go() {
+  local GOPATH=$HOME/.go
+  if [ -d "$GOPATH" ]; then
+    mkdir -p $GOPATH
+  fi
+
   docker run --rm -it \
     -v $(pwd):/usr/src/myapp \
+    -v $GOPATH:/go \
     -w /usr/src/myapp \
     golang go "$@"
 }
