@@ -111,9 +111,15 @@ mysql() {
 mysql-workbench() {
   del_stopped mysql-workbench
 
+  local DATADIR=$HOME/.mysql-workbench
+  if [ -d "$DATADIR" ]; then
+    mkdir -p $DATADIR
+  fi
+
   docker run -d \
     --net host \
     -v /tmp/.X11-unix:/tmp/.X11-unix \
+    -v $DATADIR:/root/.mysql/workbench \
     -e DISPLAY=unix$DISPLAY \
     --name mysql-workbench \
     jdecool/mysql-workbench "$@"
@@ -122,9 +128,15 @@ mysql-workbench() {
 pgadmin() {
   del_stopped pgadmin
 
+  local DATADIR=$HOME/.pgadmin
+  if [ -d "$DATADIR" ]; then
+    mkdir -p $DATADIR
+  fi
+
   docker run -d \
     --net host \
     -v /tmp/.X11-unix:/tmp/.X11-unix \
+    -v $DATADIR:/root \
     -e DISPLAY=unix$DISPLAY \
     --name pgadmin \
     jdecool/pgadmin "$@"
