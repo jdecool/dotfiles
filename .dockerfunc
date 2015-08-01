@@ -91,6 +91,12 @@ mongo() {
     mongo
 }
 
+mycli() {
+  docker run --rm -it \
+    --net host \
+    jdecool/mycli "$@"
+}
+
 mysql() {
   docker stop mysql 2>/dev/null
   docker rm mysql >/dev/null 2>/dev/null
@@ -142,6 +148,12 @@ pgadmin() {
     jdecool/pgadmin "$@"
 }
 
+pgcli() {
+  docker run --rm -it \
+    --net host \
+    jdecool/pgcli "$@"
+}
+
 postgres() {
   docker stop postgres 2>/dev/null
   docker rm postgres >/dev/null 2>/dev/null
@@ -180,6 +192,7 @@ virtualbox() {
 
   docker run -d \
     -v /tmp/.X11-unix:/tmp/.X11-unix \
+    -v $HOME/Documents:/root/Documents \
     -e DISPLAY=unix$DISPLAY \
     --privileged \
     --name virtualbox \
