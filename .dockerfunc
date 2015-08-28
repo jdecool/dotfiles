@@ -91,6 +91,21 @@ mongo() {
     mongo
 }
 
+mvn() {
+  local DATADIR=$HOME/.maven
+  if [ -d "$DATADIR" ]; then
+    mkdir -p $DATADIR
+  fi
+
+  docker run --rm -it \
+    -v $(pwd):/usr/src \
+    -v $DATADIR:/home/doe \
+    -w /usr/src \
+    -u doe \
+    jdecool/maven:latest mvn "$@"
+}
+
+
 mycli() {
   docker run --rm -it \
     --net host \
