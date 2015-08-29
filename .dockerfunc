@@ -19,6 +19,7 @@ del_stopped() {
 composer() {
   docker run --rm -it \
     -v $(pwd):/app \
+    -u doe \
     jdecool/composer "$@"
 }
 
@@ -70,8 +71,9 @@ keepass2() {
 
   docker run -d \
     -v /tmp/.X11-unix:/tmp/.X11-unix \
-    -v $HOME/Documents:/root/Documents \
+    -v $HOME/Documents:/home/doe/Documents \
     -e DISPLAY=unix$DISPLAY \
+    -u doe \
     --name keepass2 \
     jdecool/keepass2 "$@"
 }
