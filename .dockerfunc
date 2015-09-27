@@ -16,6 +16,13 @@ del_stopped() {
 }
 
 # Container Aliases
+bower() {
+  docker run --rm -it \
+    -v $(pwd):/data \
+    -u doe \
+    jdecool/bower "$@"
+}
+
 composer() {
   docker run --rm -it \
     -v $(pwd):/app \
@@ -51,6 +58,20 @@ go() {
     -v $GOPATH:/go \
     -w /usr/src/myapp \
     golang go "$@"
+}
+
+grunt() {
+  docker run --rm -it \
+    -v $(pwd):/data \
+    -u doe \
+    jdecool/grunt "$@"
+}
+
+gulp() {
+  docker run --rm -it \
+    -v $(pwd):/data \
+    -u doe \
+    jdecool/gulp "$@"
 }
 
 hhvm() {
@@ -107,7 +128,6 @@ mvn() {
     jdecool/maven:latest mvn "$@"
 }
 
-
 mycli() {
   docker run --rm -it \
     --net host \
@@ -146,6 +166,14 @@ mysql-workbench() {
     -e DISPLAY=unix$DISPLAY \
     --name mysql-workbench \
     jdecool/mysql-workbench "$@"
+}
+
+node() {
+  docker run --rm -it \
+    -v $(pwd):/usr/src/myapp \
+    -w /usr/src/myapp \
+    --name nodejs \
+    node:latest node "$@"
 }
 
 pgadmin() {
