@@ -24,8 +24,14 @@ bower() {
 }
 
 composer() {
+  local DATADIR=$HOME/.composer
+  if [ -d "$DATADIR" ]; then
+    mkdir -p $DATADIR
+  fi
+
   docker run --rm -it \
     -v $(pwd):/app \
+    -v $DATADIR:/root/.composer \
     -u doe \
     jdecool/composer "$@"
 }
