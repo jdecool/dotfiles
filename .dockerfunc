@@ -172,9 +172,16 @@ node() {
   docker run --rm -it \
     -v $(pwd):/usr/src/myapp \
     -w /usr/src/myapp \
-    -u doe \
     --name nodejs \
     node:latest node "$@"
+}
+
+npm() {
+  docker run --rm -it \
+    -v $(pwd):/usr/src/myapp \
+    -w /usr/src/myapp \
+    --name npm \
+    node:latest npm "$@"
 }
 
 pgadmin() {
