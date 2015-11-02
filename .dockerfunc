@@ -178,7 +178,6 @@ node() {
   docker run --rm -it \
     -v $(pwd):/usr/src/myapp \
     -w /usr/src/myapp \
-    --name nodejs \
     node:latest node "$@"
 }
 
@@ -244,6 +243,13 @@ redis() {
     -v $DATADIR:/data \
     --name=redis \
     redis
+}
+
+tsc() {
+  docker run --rm -it \
+    -v $(pwd):/data \
+    -u doe \
+    jdecool/typescript "$@"
 }
 
 virtualbox() {
