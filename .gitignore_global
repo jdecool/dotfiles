@@ -44,3 +44,8 @@ Thumbs.db
 *.iws
 .idea_modules/
 atlassian-ide-plugin.xml
+
+# 3rd party #
+#############
+bower_components/
+node_modules/
