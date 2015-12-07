@@ -31,7 +31,7 @@ composer() {
 
   docker run --rm -it \
     -v $(pwd):/app \
-    -v $DATADIR:/root/.composer \
+    -v $DATADIR:/home/doe/.composer \
     -u doe \
     jdecool/composer "$@"
 }
@@ -140,7 +140,7 @@ mycli() {
     jdecool/mycli "$@"
 }
 
-mysql() {
+mysql-server() {
   docker stop mysql 2>/dev/null
   docker rm mysql >/dev/null 2>/dev/null
 
