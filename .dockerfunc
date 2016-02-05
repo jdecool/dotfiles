@@ -1,12 +1,12 @@
 #!/bin/bash
 
 # Helper Functions
-dcleanup() {
+docker-cleanup() {
   docker rm $(docker ps --filter status=exited -q 2>/dev/null) 2>/dev/null
   docker rmi $(docker images --filter dangling=true -q 2>/dev/null) 2>/dev/null
 }
 
-del_stopped() {
+docker-del_stopped() {
   local name=$1
   local state=$(docker inspect --format "{{.State.Running}}" $name 2>/dev/null)
 
@@ -16,14 +16,14 @@ del_stopped() {
 }
 
 # Container Aliases
-bower() {
+docker-bower() {
   docker run --rm -it \
     -v $(pwd):/data \
     -u doe \
     jdecool/bower "$@"
 }
 
-composer() {
+docker-composer() {
   local DATADIR=$HOME/.composer
   if [ -d "$DATADIR" ]; then
     mkdir -p $DATADIR
@@ -36,7 +36,7 @@ composer() {
     jdecool/composer "$@"
 }
 
-elasticsearch() {
+docker-elasticsearch() {
   docker stop elasticsearch 2>/dev/null
   docker rm elasticsearch >/dev/null 2>/dev/null
 
@@ -53,7 +53,7 @@ elasticsearch() {
     elasticsearch
 }
 
-go() {
+docker-go() {
   local GOPATH=$HOME/.go
   if [ -d "$GOPATH" ]; then
     mkdir -p $GOPATH
@@ -66,34 +66,34 @@ go() {
     golang go "$@"
 }
 
-grunt() {
+docker-grunt() {
   docker run --rm -it \
     -v $(pwd):/data \
     -u doe \
     jdecool/grunt "$@"
 }
 
-gulp() {
+docker-gulp() {
   docker run --rm -it \
     -v $(pwd):/data \
     -u doe \
     jdecool/gulp "$@"
 }
 
-hhvm() {
+docker-hhvm() {
   docker run --rm -it \
     -v $(pwd):/root \
     jdecool/hhvm "$@"
 }
 
-jekyll() {
+docker-jekyll() {
   docker run --rm -it \
     -v $(pwd):/srv/jekyll \
     -p 127.0.0.1:4000:4000 \
     jdecool/jekyll jekyll "$@"
 }
 
-keepass2() {
+docker-keepass2() {
   del_stopped keepass2
 
   docker run -d \
@@ -105,7 +105,7 @@ keepass2() {
     jdecool/keepass2 "$@"
 }
 
-mongo() {
+docker-mongo() {
   del_stopped mongo
 
   local DATADIR=$HOME/.mongodb
@@ -120,11 +120,8 @@ mongo() {
     mongo
 }
 
-mvn() {
-  local DATADIR=$HOME/.maven
-  if [ -d "$DATADIR" ]; then
-    mkdir -p $DATADIR
-  fi
+docker-mvn() {
+  local DATADIR=$HOME
 
   docker run --rm -it \
     -v $(pwd):/usr/src \
@@ -134,13 +131,13 @@ mvn() {
     jdecool/maven:latest mvn "$@"
 }
 
-mycli() {
+docker-mycli() {
   docker run --rm -it \
     --net host \
     jdecool/mycli "$@"
 }
 
-mysql-server() {
+docker-mysql-server() {
   docker stop mysql 2>/dev/null
   docker rm mysql >/dev/null 2>/dev/null
 
@@ -157,7 +154,7 @@ mysql-server() {
     mysql
 }
 
-mysql-workbench() {
+docker-mysql-workbench() {
   del_stopped mysql-workbench
 
   local DATADIR=$HOME/.mysql-workbench
@@ -174,22 +171,32 @@ mysql-workbench() {
     jdecool/mysql-workbench "$@"
 }
 
-node() {
+docker-node() {
   docker run --rm -it \
+    --net host \
     -v $(pwd):/usr/src/myapp \
     -w /usr/src/myapp \
-    node:latest node "$@"
+    -u doe \
+    jdecool/node:latest node "$@"
 }
 
-npm() {
+docker-npm() {
   docker run --rm -it \
+    --net host \
     -v $(pwd):/usr/src/myapp \
     -w /usr/src/myapp \
-    --name npm \
-    node:latest npm "$@"
+    -u doe \
+    jdecool/node:latest npm "$@"
 }
 
-pgadmin() {
+docker-php() {
+  docker run -it --rm \
+    -v "$PWD":/usr/src/myapp \
+    -w /usr/src/myapp php:$1-cli \
+    php $2 $3 $4 $5
+}
+
+docker-pgadmin() {
   del_stopped pgadmin
 
   local DATADIR=$HOME/.pgadmin
@@ -206,13 +213,13 @@ pgadmin() {
     jdecool/pgadmin "$@"
 }
 
-pgcli() {
+docker-pgcli() {
   docker run --rm -it \
     --net host \
     jdecool/pgcli "$@"
 }
 
-postgres() {
+docker-postgres() {
   docker stop postgres 2>/dev/null
   docker rm postgres >/dev/null 2>/dev/null
 
@@ -229,7 +236,7 @@ postgres() {
     postgres
 }
 
-redis() {
+docker-redis() {
   docker stop redis 2>/dev/null
   docker rm redis >/dev/null 2>/dev/null
 
@@ -245,14 +252,14 @@ redis() {
     redis
 }
 
-tsc() {
+docker-tsc() {
   docker run --rm -it \
     -v $(pwd):/data \
     -u doe \
     jdecool/typescript "$@"
 }
 
-virtualbox() {
+docker-virtualbox() {
   del_stopped virtualbox
 
   docker run -d \
