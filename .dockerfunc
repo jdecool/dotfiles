@@ -94,7 +94,7 @@ docker-jekyll() {
 }
 
 docker-keepass2() {
-  del_stopped keepass2
+  docker-del_stopped keepass2
 
   docker run -d \
     -v /tmp/.X11-unix:/tmp/.X11-unix \
@@ -106,7 +106,7 @@ docker-keepass2() {
 }
 
 docker-mongo() {
-  del_stopped mongo
+  docker-del_stopped mongo
 
   local DATADIR=$HOME/.mongodb
   if [ -d "$DATADIR" ]; then
@@ -155,7 +155,7 @@ docker-mysql-server() {
 }
 
 docker-mysql-workbench() {
-  del_stopped mysql-workbench
+  docker-del_stopped mysql-workbench
 
   local DATADIR=$HOME/.mysql-workbench
   if [ -d "$DATADIR" ]; then
@@ -197,7 +197,7 @@ docker-php() {
 }
 
 docker-pgadmin() {
-  del_stopped pgadmin
+  docker-del_stopped pgadmin
 
   local DATADIR=$HOME/.pgadmin
   if [ -d "$DATADIR" ]; then
@@ -236,6 +236,21 @@ docker-postgres() {
     postgres
 }
 
+docker-rabbitmq() {
+  docker stop rabbitmq 2> /dev/null
+  docker rm rabbitmq
+
+  docker run -d \
+    --net host \
+    -p 127.0.0.1:4369:4369 \
+    -p 127.0.0.1:5671:5671 \
+    -p 127.0.0.1:5672:5672 \
+    -p 127.0.0.1:15672:15672 \
+    -p 127.0.0.1:25672:25672 \
+    --name rabbitmq \
+    rabbitmq:3-management
+}
+
 docker-redis() {
   docker stop redis 2>/dev/null
   docker rm redis >/dev/null 2>/dev/null
@@ -260,7 +275,7 @@ docker-tsc() {
 }
 
 docker-virtualbox() {
-  del_stopped virtualbox
+  docker-del_stopped virtualbox
 
   docker run -d \
     -v /tmp/.X11-unix:/tmp/.X11-unix \
