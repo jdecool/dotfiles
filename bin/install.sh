@@ -20,6 +20,7 @@ check_is_sudo() {
 setup_sources() {
   apt-add-repository ppa:ansible/ansible
   add-apt-repository ppa:webupd8team/java
+  add-apt-repository ppa:ubuntu-lxc/lxd-stable
 
   sh -c "echo 'deb http://download.opensuse.org/repositories/isv:/ownCloud:/desktop/Ubuntu_15.04/ /' >> /etc/apt/sources.list.d/owncloud-client.list"
 
@@ -39,6 +40,7 @@ base() {
     curl \
     dconf-editor \
     git \
+    golang \
     htop \
     libsdl-image1.2 \
     libsdl1.2debian \
