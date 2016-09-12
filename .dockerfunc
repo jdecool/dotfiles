@@ -15,11 +15,33 @@ docker-del_stopped() {
   fi
 }
 
+docker-rm-images() {
+  docker rm $(docker ps -a -q)
+  docker rmi $(docker images -q)
+}
+
+docker-create-network() {
+  for container in "$@"
+  do
+    docker network inspect $container > /dev/null 2> /dev/null || docker network create $container
+  done
+}
+
+docker-drop-container() {
+  for container in "$@"
+  do
+    docker stop $container > /dev/null 2> /dev/null || true && docker rm $container > /dev/null 2> /dev/null || true
+  done
+}
+
+docker-run() {
+  docker run -it -e LOCAL_USER_ID=`id -u $USER` "$@"
+}
+
 # Container Aliases
 docker-bower() {
-  docker run --rm -it \
+  docker-run --rm -it \
     -v $(pwd):/data \
-    -u doe \
     jdecool/bower "$@"
 }
 
@@ -29,10 +51,9 @@ docker-composer() {
     mkdir -p $DATADIR
   fi
 
-  docker run --rm -it \
+  docker-run --rm -it \
     -v $(pwd):/app \
-    -v $DATADIR:/home/doe/.composer \
-    -u doe \
+    -v $DATADIR:/home/user \
     jdecool/composer "$@"
 }
 
@@ -67,16 +88,14 @@ docker-go() {
 }
 
 docker-grunt() {
-  docker run --rm -it \
+  docker-run --rm -it \
     -v $(pwd):/data \
-    -u doe \
     jdecool/grunt "$@"
 }
 
 docker-gulp() {
-  docker run --rm -it \
+  docker-run --rm -it \
     -v $(pwd):/data \
-    -u doe \
     jdecool/gulp "$@"
 }
 
@@ -96,11 +115,10 @@ docker-jekyll() {
 docker-keepass2() {
   docker-del_stopped keepass2
 
-  docker run -d \
+  docker-run -d \
     -v /tmp/.X11-unix:/tmp/.X11-unix \
-    -v $HOME/Documents:/home/doe/Documents \
+    -v $HOME/Documents:/home/user/Documents \
     -e DISPLAY=unix$DISPLAY \
-    -u doe \
     --name keepass2 \
     jdecool/keepass2 "$@"
 }
@@ -123,11 +141,10 @@ docker-mongo() {
 docker-mvn() {
   local DATADIR=$HOME
 
-  docker run --rm -it \
+  docker-run --rm -it \
     -v $(pwd):/usr/src \
-    -v $DATADIR:/home/doe \
+    -v $DATADIR:/home/user \
     -w /usr/src \
-    -u doe \
     jdecool/maven:latest mvn "$@"
 }
 
@@ -172,20 +189,18 @@ docker-mysql-workbench() {
 }
 
 docker-node() {
-  docker run --rm -it \
+  docker-run --rm -it \
     --net host \
     -v $(pwd):/usr/src/myapp \
     -w /usr/src/myapp \
-    -u doe \
     jdecool/node:latest node "$@"
 }
 
 docker-npm() {
-  docker run --rm -it \
+  docker-run --rm -it \
     --net host \
     -v $(pwd):/usr/src/myapp \
     -w /usr/src/myapp \
-    -u doe \
     jdecool/node:latest npm "$@"
 }
 
@@ -193,7 +208,7 @@ docker-php() {
   docker run -it --rm \
     -v "$PWD":/usr/src/myapp \
     -w /usr/src/myapp php:$1-cli \
-    php $2 $3 $4 $5
+    php "$@"
 }
 
 docker-pgadmin() {
@@ -268,9 +283,8 @@ docker-redis() {
 }
 
 docker-tsc() {
-  docker run --rm -it \
+  docker-run --rm -it \
     -v $(pwd):/data \
-    -u doe \
     jdecool/typescript "$@"
 }
 
