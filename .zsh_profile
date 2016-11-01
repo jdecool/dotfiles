@@ -8,8 +8,5 @@ unset file
 
 xhost + > /dev/null
 
-alias godoc="go doc"
-
 export GOPATH=$HOME/go
-
 export PATH=$PATH:$GOPATH/bin
