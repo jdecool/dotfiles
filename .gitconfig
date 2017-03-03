@@ -13,9 +13,11 @@
   l = log --pretty=oneline -n 20 --graph --abbrev-commit
   lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
   p = !"git pull; git submodule foreach git pull origin master"
+  path = add --patch
   s = status -s
   st = status
   tags = tag -l
+  unstage-patch = reset HEAD --patch
 
 [apply]
   whitespace = fix
