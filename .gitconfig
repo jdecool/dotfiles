@@ -1,10 +1,10 @@
 [alias]
   a = add
-  amend = commit --amend --reuse-message=HEAD
+  amend = commit -S --amend --reuse-message=HEAD
   br = branch
   c = clone --recursive
   ca = !git add -A && git commit -av
-  ci = commit
+  ci = commit -S
   co = checkout
   contributors = shortlog --summary --numbered
   d = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
