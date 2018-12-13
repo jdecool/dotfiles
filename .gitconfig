@@ -62,3 +62,9 @@
 
 [github]
   user = jdecool
+
+[protocol]
+  version = 2
+
+[pager]
+  branch = cat
