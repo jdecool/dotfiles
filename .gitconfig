@@ -16,6 +16,7 @@
   m = merge -S
   p = !"git pull; git submodule foreach git pull origin master"
   path = add --patch
+  r = revert -S
   s = status -s
   st = status
   tags = tag -l
