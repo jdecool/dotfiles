@@ -1,7 +1,7 @@
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
-ZSH_THEME="agnoster"
+ZSH_THEME="af-magic"
 
 plugins=(atom bower docker docker-compose git grunt postgres python ruby rvm symfony2 vagrant)
 
