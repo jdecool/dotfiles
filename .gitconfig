@@ -16,9 +16,12 @@
   m = merge -S
   p = !"git pull; git submodule foreach git pull origin master"
   path = add --patch
-  r = revert -S
+  r = restore
+  rebase = rebase -S
+  revert = revert -S
   s = status -s
   st = status
+  sw = switch
   tags = tag -l
   unstage-patch = reset HEAD --patch
 
