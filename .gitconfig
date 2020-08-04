@@ -55,6 +55,9 @@
 [diff]
   renames = copies
 
+[init]
+  defaultBranch = main
+
 [merge]
   log = true
 
