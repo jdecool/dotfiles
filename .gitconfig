@@ -52,6 +52,9 @@
   changed = green
   untracked = cyan
 
+[commit]
+  gpgsign = true
+
 [diff]
   renames = copies
 
