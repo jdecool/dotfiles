@@ -50,3 +50,4 @@ atlassian-ide-plugin.xml
 bower_components/
 node_modules/
 .sass-cache/
+.vscode/
