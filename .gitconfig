@@ -58,11 +58,24 @@
 [diff]
   renames = copies
 
+[github]
+  user = jdecool
+
 [init]
   defaultBranch = main
 
 [merge]
   log = true
+
+[pager]
+  branch = cat
+
+[protocol]
+  version = 2
+
+[pull]
+  ff = only
+  rebase = false
 
 [push]
   default = simple
@@ -71,11 +84,5 @@
   name = Jérémy DECOOL
   email = contact@jdecool.fr
 
-[github]
-  user = jdecool
-
-[protocol]
-  version = 2
-
-[pager]
-  branch = cat
+[includeIf "gitdir:~/Workspace/activinnov/"]
+  path = ~/.gitconfig-activinnov
