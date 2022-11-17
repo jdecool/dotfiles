@@ -12,6 +12,7 @@ alias -- -="cd -"
 alias c="clear"
 alias dl="cd ~/Downloads"
 alias g="git"
+alias gcdm="git branch --merged | grep -Ev '(^\*|master|main|develop)' | xargs git branch -d"
 alias h="history"
 
 alias sf="app/console"
