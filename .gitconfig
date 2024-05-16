@@ -29,6 +29,9 @@
 [apply]
   whitespace = fix
 
+[branch]
+  sort = -committerdate
+
 [core]
   editor = vim
   excludesfile = ~/.gitignore
@@ -55,17 +58,23 @@
 
 [commit]
   gpgsign = true
+  verbose = true
 
 [diff]
+  algorithm = histogram
   renames = copies
 
 [github]
   user = jdecool
 
+[help]
+  autocorrect = 10
+
 [init]
   defaultBranch = main
 
 [merge]
+  conflictstyle = diff3
   log = true
 
 [pager]
@@ -79,8 +88,14 @@
   rebase = false
 
 [push]
-  default = simple
+  default = current
   autoSetupRemote = true
+
+[rebase]
+  autosquash = true
+
+[rerere]
+  enabled = true
 
 [user]
   name = Jérémy DECOOL
