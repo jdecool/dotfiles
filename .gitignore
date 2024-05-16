@@ -44,6 +44,7 @@ Thumbs.db
 *.iws
 .idea_modules/
 atlassian-ide-plugin.xml
+http-client.private.env.json
 
 # 3rd party #
 #############
