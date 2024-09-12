@@ -24,6 +24,7 @@
   st = status
   sw = switch
   tags = tag -l
+  undo = reset --soft HEAD^
   unstage-patch = reset HEAD --patch
 
 [apply]
