@@ -65,6 +65,13 @@
   algorithm = histogram
   renames = copies
 
+[fetch]
+  prune = true
+  pruneTags = true
+
+[gc]
+  reflogExpire = 90
+
 [github]
   user = jdecool
 
@@ -95,6 +102,10 @@
 [rebase]
   autosquash = true
   updateRefs = true
+
+[remote "origin"]
+  prune = true
+  pruneTags = true
 
 [rerere]
   enabled = true
